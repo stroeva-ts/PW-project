@@ -1,0 +1,14 @@
+{
+  "name": "automation-with-playwright",
+  "version": "1.0.0",
+  "description": "Learn automation with playwright",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Stroeva TS",
+  "license": "ISC",
+  "dependencies": {
+    "@playwright/test": "^1.34.0"
+  }
+}

@@ -1,29 +1,31 @@
 import {test, expect} from "@playwright/test";
+import { LoginPage } from "../../page-objects/LoginPage";
+import { MyBoardsPage } from "../../page-objects/MyBoardsPage";
+import { Board } from "../../page-objects/Board";
 
 test.describe.parallel("Work With 3 Columns Board", ()=>
 {
+    let loginPage : LoginPage;
+    let myBoardsPage : MyBoardsPage;
+    let board : Board;
     //before hook
     test.beforeEach(async ({page})=>
     {
-        await page.goto("https://myretro-stg.tochkavhoda.ru/");
-        await page.click(".signin");
-        await page.type("#email", "an.tan_ta@mail.ru");
-        await page.type("#password", "czM6MEOY3FfH9zj9AzI9");
-        await page.click(".button-login");
+        loginPage = new LoginPage(page);
+        myBoardsPage = new MyBoardsPage(page);
+        board = new Board(page);
+        await loginPage.visitMyRetro();
+        await loginPage.login("an.tan_ta@mail.ru", "czM6MEOY3FfH9zj9AzI9");
 
-        await page.click("[data-qa=add-new-board]");
-        await page.type("[data-qa=new-board-project-name]","Test project 123");
-        await page.click("[data-qa=new-board-columns-number]");
-        await page.click("text=- 3 -");
-        await page.click("[data-qa=new-board-column-names]");
-        await page.click("text=- 3 - Good - Bad - Actions");
-        await page.click("[data-qa=start-retro-button]");
+        await myBoardsPage.fillNewBoardForm("Test project 123", 3, "Good - Bad - Actions");
+        await myBoardsPage.clickStartRetroButton();
+
         await expect(page).toHaveURL(/board/);
     });
 
     test.afterEach(async ({page})=>
     {
-        await page.goto("https://myretro-stg.tochkavhoda.ru/");
+        await loginPage.visitMyRetro();
         const deleteButton = page.locator(".row.content > div:nth-child(2)>div> div.row.actions > a:nth-child(1)").getByText("DELETE");
         await deleteButton.click();
         await page.getByRole("button", {name:"Yes"}).click();
@@ -31,10 +33,7 @@ test.describe.parallel("Work With 3 Columns Board", ()=>
 
     test("Add New Card In Good Column", async ({page})=>
     {
-        await page.getByRole("button",{name:"Good"}).click();
-        await page.type(".row .content","test content");
-        await page.keyboard.press("Enter");
-
+        await board.addNewCardGood("test content");
         const cardContent = page.locator(".row .content");
         await expect(cardContent).toHaveText("test content");
     });

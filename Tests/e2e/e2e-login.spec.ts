@@ -1,31 +1,28 @@
 import {test, expect} from "@playwright/test";
+import { LoginPage } from "../../page-objects/LoginPage";
 
 test.describe.parallel("Login and Logout", ()=>
 {
+    let loginPage : LoginPage;
     //before hook
     test.beforeEach(async ({page})=>
     {
-        await page.goto("https://myretro-stg.tochkavhoda.ru/");
+        loginPage = new LoginPage(page);
+        await loginPage.visitMyRetro();
     });
 
     //Negative test
     test("Login with invalid credentials", async ({page}) =>
 {
-   await page.click(".signin");
-   await page.type("#email", "wrong email");
-   await page.type("#password", "wrong password");
-   await page.click(".button-login");
-   const errorMassage = page.locator("text=Error: Authentication failed: Wrong login or password");
-   await expect(errorMassage).toContainText("Error: Authentication failed: Wrong login or password");
+   await loginPage.login("wrong email", "wrong password");
+   await loginPage.assertErrorMassage();
 });
     
     //Positive test
     test("Login and Logout with valid credentials", async ({page})=>
     {
-        await page.click(".signin");
-        await page.type("#email", "an.tan_ta@mail.ru");
-        await page.type("#password", "czM6MEOY3FfH9zj9AzI9");
-        await page.click(".button-login");
+        await loginPage.login("an.tan_ta@mail.ru", "czM6MEOY3FfH9zj9AzI9");
+
         const headerTitle = page.locator(" .blueprint .header .title");
         await expect(headerTitle).toBeVisible();
 

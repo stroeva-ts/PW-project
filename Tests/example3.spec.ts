@@ -52,10 +52,6 @@ test("Ассерты", async ({page}) =>
     await expect (logo).toBeVisible();
     await expect(logo).toHaveText("MyRetro");
     const signInDialog = page.locator(" .dialog");
-    await expect(signInDialog).not.toBeVisible;
+    await expect(signInDialog).not.toBeVisible();
 });
 });
-
-
-
-

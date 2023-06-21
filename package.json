@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:chrome": "npx playwright test --project=chromium",
     "test:firefox": "npx playwright test --project=firefox",
-    "test:webkit": "npx playwright test --project=webkit"
+    "test:webkit": "npx playwright test --project=webkit",
+    "test:api":"npx playwright test --config=api.config.ts"
   },
   "author": "Stroeva TS",
   "license": "ISC",

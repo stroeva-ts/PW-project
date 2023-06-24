@@ -19,8 +19,8 @@ test.describe.parallel.only("User Profile", ()=>
     {
         await profile.openProfileOption();
         const firstNameField = page.locator("#first-name");
-        await firstNameField.fill("Cancel first name");
-        await page.click("[data-qa=profile-cancel-button]");
+        await profile.fillFirstName("Cancel first name");
+        await profile.ckickButtonCancel();
         await profile.openProfileOption();
         await expect(firstNameField).not.toHaveValue("Cancel first name");
     });
@@ -29,8 +29,8 @@ test.describe.parallel.only("User Profile", ()=>
     {
         await profile.openProfileOption();
         const firstNameField = page.locator("#first-name");
-        await firstNameField.fill("Submit first name");
-        await page.click("[data-qa=profile-submit-button]");
+        await profile.fillFirstName("Submit first name");
+        await profile.ckickButtonSubmit();
         await profile.openProfileOption();
         await expect(firstNameField).toHaveValue("Submit first name");
     });
@@ -47,7 +47,7 @@ test.describe.parallel.only("User Profile", ()=>
         await profile.openProfileOption();
         await page.click(".md-select-value[name=position-id]");
         await page.getByRole('button',{name: 'project manager'}).click();
-        await page.click("[data-qa=profile-submit-button]");
+        await profile.ckickButtonSubmit();
         await profile.openProfileOption();
         const position = page.locator(".md-select-value[name=position-id]");
         await expect(position).toHaveValue("project manager");
@@ -57,7 +57,7 @@ test.describe.parallel.only("User Profile", ()=>
     {
         await profile.openProfileOption();
         await page.fill("#workExperience","11");
-        await page.click("[data-qa=profile-submit-button]");
+        await profile.ckickButtonSubmit();
         await profile.openProfileOption();
         const WorkExperience = page.locator("#workExperience");
         await expect(WorkExperience).toHaveValue("11");
@@ -70,7 +70,7 @@ test.describe.parallel.only("User Profile", ()=>
         await page.fill(".field-birthday .md-input","2000-09-22");
         await (await page.waitForSelector("text=Ok")).click();
 
-        await page.click("[data-qa=profile-submit-button]");
+        await profile.ckickButtonSubmit();
         await profile.openProfileOption();
 
         const BirthdayDate = page.locator(".field-birthday .md-input");
@@ -81,8 +81,8 @@ test.describe.parallel.only("User Profile", ()=>
     {
         await profile.openProfileOption();
         const lastNameField = page.locator("#last-name");
-        await lastNameField.fill("Cancel last name");
-        await page.click("[data-qa=profile-cancel-button]");
+        await profile.fillLastName("Cancel last name");
+        await profile.ckickButtonCancel();
         await profile.openProfileOption();
         await expect(lastNameField).not.toHaveValue("Cancel last name");
     });
@@ -91,8 +91,8 @@ test.describe.parallel.only("User Profile", ()=>
     {
         await profile.openProfileOption();
         const lastNameField = page.locator("#last-name");
-        await lastNameField.fill("Submit last name");
-        await page.click("[data-qa=profile-submit-button]");
+        await profile.fillLastName("Submit last name");
+        await profile.ckickButtonSubmit();
         await profile.openProfileOption();
         await expect(lastNameField).toHaveValue("Submit last name");
     });
@@ -102,7 +102,7 @@ test.describe.parallel.only("User Profile", ()=>
         await profile.openProfileOption();
         const phoneField = page.locator("#phone");
         await phoneField.fill("8-950-798-89-56-100");
-        await page.click("[data-qa=profile-cancel-button]");
+        await profile.ckickButtonCancel();
         await profile.openProfileOption();
         await expect(phoneField).not.toHaveValue("8-950-798-89-56-100");
     });
@@ -112,7 +112,7 @@ test.describe.parallel.only("User Profile", ()=>
         await profile.openProfileOption();
         const phoneField = page.locator("#phone");
         await phoneField.fill("8-950-798-89-56");
-        await page.click("[data-qa=profile-submit-button]");
+        await profile.ckickButtonSubmit();
         await profile.openProfileOption();
         await expect(phoneField).toHaveValue("8-950-798-89-56");
     });

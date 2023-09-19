@@ -24,6 +24,7 @@
 4. Get /templates
 5. Post /cards
 6. Delete /cards/{cardId}
+   
 В планах покрыть автотестами все эндпоинты согласно документации [Swagger](https://myretro-stg.tochkavhoda.ru/api/docs).
 
 ## локальная настройка проекта
